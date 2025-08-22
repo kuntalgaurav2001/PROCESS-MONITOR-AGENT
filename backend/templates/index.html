@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Process Monitor System</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="static/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-server me-2"></i>
+                Process Monitor System
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#dashboard">
+                            <i class="fas fa-tachometer-alt me-1"></i>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#processes">
+                            <i class="fas fa-list me-1"></i>Processes
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#hosts">
+                            <i class="fas fa-desktop me-1"></i>Hosts
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#analytics">
+                            <i class="fas fa-chart-line me-1"></i>Analytics
+                        </a>
+                    </li>
+                </ul>
+                <div class="navbar-nav">
+                    <button class="btn btn-outline-light btn-sm me-2" id="refreshBtn">
+                        <i class="fas fa-sync-alt me-1"></i>Refresh
+                    </button>
+                    <span class="navbar-text">
+                        <i class="fas fa-clock me-1"></i>
+                        <span id="lastUpdate">Never</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container-fluid mt-3">
+        <!-- Dashboard Section -->
+        <div id="dashboard" class="section">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="mb-3">
+                        <i class="fas fa-tachometer-alt me-2"></i>System Dashboard
+                    </h2>
+                </div>
+            </div>
+            
+            <!-- Host Summary Cards -->
+            <div class="row mb-4" id="hostSummaryCards">
+                <!-- Host cards will be populated here -->
+            </div>
+            
+            <!-- System Overview -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">
+                                <i class="fas fa-chart-pie me-2"></i>System Overview
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="metric-item">
+                                        <div class="metric-value" id="totalProcesses">-</div>
+                                        <div class="metric-label">Total Processes</div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="metric-item">
+                                        <div class="metric-value" id="totalHosts">-</div>
+                                        <div class="metric-label">Active Hosts</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">
+                                <i class="fas fa-clock me-2"></i>Last Update
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="text-center">
+                                <div class="display-6" id="lastUpdateTime">-</div>
+                                <small class="text-muted">Last data refresh</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Processes Section -->
+        <div id="processes" class="section" style="display: none;">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="mb-3">
+                        <i class="fas fa-list me-2"></i>Process Monitoring
+                    </h2>
+                </div>
+            </div>
+            
+            <!-- Process Controls -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="fas fa-search"></i>
+                        </span>
+                        <input type="text" class="form-control" id="processSearch" placeholder="Search processes...">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-outline-primary" id="topCpuBtn">
+                            <i class="fas fa-microchip me-1"></i>Top CPU
+                        </button>
+                        <button type="button" class="btn btn-outline-primary" id="topMemoryBtn">
+                            <i class="fas fa-memory me-1"></i>Top Memory
+                        </button>
+                        <button type="button" class="btn btn-outline-primary" id="treeViewBtn">
+                            <i class="fas fa-sitemap me-1"></i>Tree View
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Process Table -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-table me-2"></i>Process List
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover" id="processTable">
+                            <thead>
+                                <tr>
+                                    <th>Process</th>
+                                    <th>PID</th>
+                                    <th>PPID</th>
+                                    <th>User</th>
+                                    <th>Status</th>
+                                    <th>CPU %</th>
+                                    <th>Memory</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="processTableBody">
+                                <!-- Process rows will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Process Tree View -->
+        <div id="processTreeView" class="section" style="display: none;">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="mb-3">
+                        <i class="fas fa-sitemap me-2"></i>Process Tree View
+                    </h2>
+                    <button class="btn btn-outline-secondary mb-3" id="backToListBtn">
+                        <i class="fas fa-arrow-left me-1"></i>Back to List
+                    </button>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-body">
+                    <div id="processTree">
+                        <!-- Process tree will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hosts Section -->
+        <div id="hosts" class="section" style="display: none;">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="mb-3">
+                        <i class="fas fa-desktop me-2"></i>Host Management
+                    </h2>
+                </div>
+            </div>
+            
+            <div class="row" id="hostCards">
+                <!-- Host cards will be populated here -->
+            </div>
+        </div>
+
+        <!-- Analytics Section -->
+        <div id="analytics" class="section" style="display: none;">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="mb-3">
+                        <i class="fas fa-chart-line me-2"></i>Process Analytics
+                    </h2>
+                </div>
+            </div>
+            
+            <div id="analyticsCharts">
+                <!-- Charts will be dynamically populated here -->
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Loading analytics data...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Process Details Modal -->
+    <div class="modal fade" id="processModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Process Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="processModalBody">
+                    <!-- Process details will be populated here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="loading-overlay" style="display: none;">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Custom JS -->
+    <script src="static/js/app.js"></script>
+    <script src="static/js/process-tree.js"></script>
+</body>
+</html>

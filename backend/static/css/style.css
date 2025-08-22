@@ -1,0 +1,507 @@
+/* Process Monitor System Styles */
+
+:root {
+    --primary-color: #007bff;
+    --secondary-color: #6c757d;
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --info-color: #17a2b8;
+    --light-color: #f8f9fa;
+    --dark-color: #343a40;
+    --border-radius: 0.375rem;
+    --box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    --transition: all 0.15s ease-in-out;
+}
+
+/* Global Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+.navbar-brand {
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
+/* Section Management */
+.section {
+    min-height: 400px;
+}
+
+/* Cards and Metrics */
+.card {
+    border: none;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+    margin-bottom: 1rem;
+}
+
+.card:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+.card-header {
+    background-color: #fff;
+    border-bottom: 1px solid #dee2e6;
+    font-weight: 600;
+}
+
+.metric-item {
+    text-align: center;
+    padding: 1rem;
+}
+
+.metric-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.metric-label {
+    font-size: 0.875rem;
+    color: var(--secondary-color);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Host Summary Cards */
+.host-card {
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.host-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.host-status {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.host-status.online {
+    background-color: var(--success-color);
+    box-shadow: 0 0 0 4px rgba(40, 167, 69, 0.2);
+}
+
+.host-status.offline {
+    background-color: var(--danger-color);
+    box-shadow: 0 0 0 4px rgba(220, 53, 69, 0.2);
+}
+
+.host-status.warning {
+    background-color: var(--warning-color);
+    box-shadow: 0 0 0 4px rgba(255, 193, 7, 0.2);
+}
+
+/* Process Table */
+.table {
+    font-size: 0.9rem;
+}
+
+.table th {
+    border-top: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+    color: var(--secondary-color);
+}
+
+.table td {
+    vertical-align: middle;
+    border-top: 1px solid #f1f3f4;
+}
+
+.process-name {
+    font-weight: 600;
+    color: var(--dark-color);
+}
+
+.process-pid {
+    font-family: 'Courier New', monospace;
+    color: var(--secondary-color);
+    font-size: 0.8rem;
+}
+
+.process-user {
+    font-size: 0.8rem;
+    color: var(--secondary-color);
+}
+
+.process-status {
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.process-status.running {
+    background-color: rgba(40, 167, 69, 0.1);
+    color: var(--success-color);
+}
+
+.process-status.sleeping {
+    background-color: rgba(255, 193, 7, 0.1);
+    color: var(--warning-color);
+}
+
+.process-status.stopped {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: var(--danger-color);
+}
+
+.process-status.zombie {
+    background-color: rgba(108, 117, 125, 0.1);
+    color: var(--secondary-color);
+}
+
+.process-status.unknown {
+    background-color: rgba(23, 162, 184, 0.1);
+    color: var(--info-color);
+}
+
+.cpu-usage {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.memory-usage {
+    font-weight: 600;
+    color: var(--info-color);
+}
+
+/* Process Tree */
+.process-tree {
+    font-family: 'Courier New', monospace;
+}
+
+.tree-node {
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    border-radius: var(--border-radius);
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    transition: var(--transition);
+}
+
+.tree-node:hover {
+    background-color: #f8f9fa;
+    border-color: var(--primary-color);
+}
+
+.tree-node.expanded {
+    background-color: #e3f2fd;
+    border-color: var(--primary-color);
+}
+
+.tree-toggle {
+    cursor: pointer;
+    color: var(--primary-color);
+    margin-right: 0.5rem;
+    transition: var(--transition);
+}
+
+.tree-toggle:hover {
+    color: var(--dark-color);
+}
+
+.tree-toggle.expanded {
+    transform: rotate(90deg);
+}
+
+.tree-children {
+    margin-left: 2rem;
+    border-left: 2px solid #dee2e6;
+    padding-left: 1rem;
+}
+
+.tree-children.collapsed {
+    display: none;
+}
+
+.process-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.process-details {
+    flex: 1;
+}
+
+.process-metrics {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.8rem;
+}
+
+/* Loading and Overlays */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+}
+
+/* Search and Filters */
+.search-container {
+    margin-bottom: 1rem;
+}
+
+.filter-buttons {
+    margin-bottom: 1rem;
+}
+
+.filter-buttons .btn {
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container-fluid {
+        padding: 0.5rem;
+    }
+    
+    .metric-value {
+        font-size: 1.5rem;
+    }
+    
+    .table-responsive {
+        font-size: 0.8rem;
+    }
+    
+    .btn-group {
+        flex-direction: column;
+    }
+    
+    .btn-group .btn {
+        margin-bottom: 0.25rem;
+        margin-right: 0;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar-brand {
+        font-size: 1.2rem;
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+    
+    .metric-item {
+        padding: 0.5rem;
+    }
+    
+    .metric-value {
+        font-size: 1.25rem;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+.slide-in {
+    animation: slideIn 0.3s ease-out;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #0056b3;
+}
+
+/* Utility Classes */
+.text-truncate-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.transition-all {
+    transition: var(--transition);
+}
+
+.shadow-sm {
+    box-shadow: var(--box-shadow);
+}
+
+.shadow-lg {
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175);
+}
+
+/* Status Indicators */
+.status-indicator {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+}
+
+.status-indicator.online {
+    background-color: var(--success-color);
+}
+
+.status-indicator.offline {
+    background-color: var(--danger-color);
+}
+
+.status-indicator.warning {
+    background-color: var(--warning-color);
+}
+
+/* Progress Bars */
+.progress {
+    height: 0.5rem;
+    border-radius: 0.25rem;
+}
+
+.progress-bar {
+    transition: width 0.6s ease;
+}
+
+/* Badges */
+.badge {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+}
+
+/* Tooltips */
+.tooltip {
+    font-size: 0.8rem;
+}
+
+/* Modal Customization */
+.modal-header {
+    background-color: var(--light-color);
+    border-bottom: 1px solid #dee2e6;
+}
+
+.modal-footer {
+    background-color: var(--light-color);
+    border-top: 1px solid #dee2e6;
+}
+
+/* Chart Containers */
+.chart-container {
+    position: relative;
+    height: 300px;
+    margin: 1rem 0;
+}
+
+/* Navigation Active States */
+.nav-link.active {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius);
+}
+
+/* Button States */
+.btn:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.btn-outline-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 123, 255, 0.25);
+}
+
+/* Table Row Hover Effects */
+.table-hover tbody tr:hover {
+    background-color: rgba(0, 123, 255, 0.05);
+}
+
+/* Form Controls */
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Alert Styling */
+.alert {
+    border: none;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+/* Pagination */
+.pagination .page-link {
+    color: var(--primary-color);
+    border-color: #dee2e6;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.pagination .page-link:hover {
+    color: var(--primary-color);
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+}
